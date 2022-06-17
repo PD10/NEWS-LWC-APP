@@ -6,15 +6,13 @@ export default class NewsComponent extends LightningElement {
     countryValue = 'in';
     genreValue = 'business';
     searchTerm = '';
-
-    connectedCallback() {
-        this.fetchNews();
-    }
+    isSpinnerLoaded = false;
+    timeout = null;
 
     countryOptions = [
         { label: 'India', value: 'in' },
         { label: 'USA', value: 'us' },
-        { label: 'UK', value: 'uk' },
+        { label: 'UK', value: 'gb' },
     ];
 
     genreOptions = [
@@ -27,13 +25,20 @@ export default class NewsComponent extends LightningElement {
         { label: 'Technology', value: 'technology' },
     ];
 
+    connectedCallback() {
+        this.fetchNews();
+    }
+
     fetchNews() {
+        this.isSpinnerLoaded = true;
         getTopHeadlineNews({ country: this.countryValue, category: this.genreValue, keyword: this.searchTerm })
             .then(response => {
                 this.formatNewsData(response.articles);
+                this.isSpinnerLoaded = false;
             })
             .catch(error => {
                 console.log(error);
+                this.isSpinnerLoaded = false;
             })
     }
 
@@ -58,6 +63,10 @@ export default class NewsComponent extends LightningElement {
 
     handleSearchChange(event) {
         this.searchTerm = event.target.value;
-        this.fetchNews();
+        clearTimeout(this.timeout);
+        // eslint-disable-next-line @lwc/lwc/no-async-operation
+        this.timeout = setTimeout(() => {
+            this.fetchNews();
+        }, 1000);
     }
 }
