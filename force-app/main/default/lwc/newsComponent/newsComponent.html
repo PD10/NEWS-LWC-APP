@@ -1,0 +1,44 @@
+<template>
+    <div class="container">
+        <div class="country-combobox">
+            <lightning-combobox
+                name="Select Country"
+                label="Select Country"
+                value={countryValue}
+                placeholder="Select Country"
+                options={countryOptions}
+                onchange={handleCountryChange} 
+            >
+            </lightning-combobox>
+        </div>
+        <div class="genre-combobox">
+            <lightning-combobox
+                name="Select Genre"
+                label="Select Genre"
+                value={genreValue}
+                placeholder="Select Genre"
+                options={genreOptions}
+                onchange={handleGenreChange} 
+            >
+            </lightning-combobox>
+        </div>
+        <div class="search-term">
+            <lightning-input
+                type="text"
+                label="Search news"
+                placeholder="Search news"
+                onchange={handleSearchChange}
+            >
+            </lightning-input>
+        </div>
+        <div class="slds-grid slds-gutters slds-wrap justify-center">
+            <template for:each={news} for:item="newsItem">
+                <div class="slds-col" key = {newsItem.id}>
+                    <span>
+                        <c-news-card news-item = {newsItem}></c-news-card>
+                    </span>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

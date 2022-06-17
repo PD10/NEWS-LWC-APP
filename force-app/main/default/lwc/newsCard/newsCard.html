@@ -1,0 +1,16 @@
+<template>
+    <div class="slds-size_medium slds-var-p-around_medium card">
+        <lightning-card>
+            <div class = "slds-var-p-around_small">
+              <img class="card-image" src={newsItem.urlToImage} />
+              <div class="card-text">
+                <span class="date">{newsItem.date}</span>
+                <h2>{newsItem.title}</h2>
+              </div>
+            </div>
+        </lightning-card>
+        <div class="card-stats" onclick={showModal} data-item={newsItem.id}>
+          Read More
+        </div>
+    </div>
+</template>
