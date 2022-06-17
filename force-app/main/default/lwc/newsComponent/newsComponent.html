@@ -1,35 +1,49 @@
 <template>
     <div class="container">
-        <div class="country-combobox">
-            <lightning-combobox
-                name="Select Country"
-                label="Select Country"
-                value={countryValue}
-                placeholder="Select Country"
-                options={countryOptions}
-                onchange={handleCountryChange} 
-            >
-            </lightning-combobox>
-        </div>
-        <div class="genre-combobox">
-            <lightning-combobox
-                name="Select Genre"
-                label="Select Genre"
-                value={genreValue}
-                placeholder="Select Genre"
-                options={genreOptions}
-                onchange={handleGenreChange} 
-            >
-            </lightning-combobox>
-        </div>
-        <div class="search-term">
-            <lightning-input
-                type="text"
-                label="Search news"
-                placeholder="Search news"
-                onchange={handleSearchChange}
-            >
-            </lightning-input>
+        <div class="slds-grid slds-gutters slds-wrap slds-var-p-around_medium">
+            <div class="slds-col">
+                <span>
+                    <div class="country-combobox">
+                        <lightning-combobox
+                            name="Select Country"
+                            label="Select Country"
+                            value={countryValue}
+                            placeholder="Select Country"
+                            options={countryOptions}
+                            onchange={handleCountryChange} 
+                        >
+                        </lightning-combobox>
+                    </div>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <div class="genre-combobox">
+                        <lightning-combobox
+                            name="Select Genre"
+                            label="Select Genre"
+                            value={genreValue}
+                            placeholder="Select Genre"
+                            options={genreOptions}
+                            onchange={handleGenreChange} 
+                        >
+                        </lightning-combobox>
+                    </div>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <div class="search-term">
+                        <lightning-input
+                            type="text"
+                            label="Search news"
+                            placeholder="Search news"
+                            onchange={handleSearchChange}
+                        >
+                        </lightning-input>
+                    </div>
+                </span>
+            </div>
         </div>
         <div class="slds-grid slds-gutters slds-wrap justify-center">
             <template for:each={news} for:item="newsItem">
