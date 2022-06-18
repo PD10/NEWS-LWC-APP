@@ -1,8 +1,10 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
 import getTopHeadlineNews from '@salesforce/apex/NewsController.getTopHeadlineNews';
 
 export default class NewsComponent extends LightningElement {
-    @track news;
+    news;
+    isThereNews;
+    isThereError;
     countryValue = 'in';
     genreValue = 'business';
     searchTerm = '';
@@ -33,11 +35,18 @@ export default class NewsComponent extends LightningElement {
         this.isSpinnerLoaded = true;
         getTopHeadlineNews({ country: this.countryValue, category: this.genreValue, keyword: this.searchTerm })
             .then(response => {
-                this.formatNewsData(response.articles);
+                if(response.articles.length === 0) {
+                    this.isThereNews = false;
+                } else {
+                    this.isThereNews = true;
+                    this.formatNewsData(response.articles);
+                }
+                this.isThereError = false;
                 this.isSpinnerLoaded = false;
             })
             .catch(error => {
                 console.log(error);
+                this.isThereError = true;
                 this.isSpinnerLoaded = false;
             })
     }

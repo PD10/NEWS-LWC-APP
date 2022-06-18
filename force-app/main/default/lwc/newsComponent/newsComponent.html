@@ -51,13 +51,21 @@
                 </div>
             </div>
         </template>
-        <div class="slds-grid slds-gutters slds-wrap justify-center">
-            <template for:each={news} for:item="newsItem">
-                <div class="slds-col" key = {newsItem.id}>
-                    <span>
-                        <c-news-card news-item = {newsItem}></c-news-card>
-                    </span>
-                </div>
+        <div class="slds-grid slds-gutters slds-wrap justify-center slds-var-p-around_medium">
+            <template if:true={isThereNews}>
+                <template for:each={news} for:item="newsItem">
+                    <div class="slds-col" key = {newsItem.id}>
+                        <span>
+                            <c-news-card news-item = {newsItem}></c-news-card>
+                        </span>
+                    </div>
+                </template>
+            </template>
+            <template if:false={isThereNews}>
+                <p>No news found.</p>
+            </template>
+            <template if:true={isThereError}>
+                <p>Server Error.</p>
             </template>
         </div>
     </div>
