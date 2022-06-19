@@ -49,6 +49,48 @@
                         </div>
                     </span>
                 </div>
+                <div class="slds-col">
+                    <span>
+                        <div class="news-per-page-combobox">
+                            <lightning-combobox
+                                name="News Per Page"
+                                label="News Per Page"
+                                value={newsPerPage}
+                                placeholder="News Per Page"
+                                options={newsPerPageOptions}
+                                onchange={handleNewsPerPageChange} 
+                            >
+                            </lightning-combobox>
+                        </div>
+                    </span>
+                </div>
+                <div class="slds-col">
+                    <span>
+                        <div class="page-number-combobox">
+                            <lightning-combobox
+                                name="Page Number"
+                                label="Page Number"
+                                value={pageNumber}
+                                placeholder="Page Number"
+                                options={pageNumberOptions}
+                                onchange={handlePageChange} 
+                            >
+                            </lightning-combobox>
+                        </div>
+                        <!-- <div class="nav-buttons">
+                            <template if:false={isFirstPage}>
+                                <button onclick={handlePrevPage}>Previous Page</button>
+                            </template>
+                            <template if:false={isLastPage}>
+                                <button onclick={handleNextPage}>Next Page</button>
+                            </template>
+                        </div>
+                        <div class="page-info">
+                            Total Records: {totalRecordCount}
+                            Page ({pageNumber} of {})
+                        </div> -->
+                    </span>
+                </div>
             </div>
         </template>
         <div class="slds-grid slds-gutters slds-wrap justify-center slds-var-p-around_medium">

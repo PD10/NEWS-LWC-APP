@@ -10,6 +10,9 @@ export default class NewsComponent extends LightningElement {
     searchTerm = '';
     isSpinnerLoaded = false;
     timeout = null;
+    newsPerPage = 10;
+    pageNumber = 1;
+    totalResults;
 
     countryOptions = [
         { label: 'India', value: 'in' },
@@ -27,14 +30,41 @@ export default class NewsComponent extends LightningElement {
         { label: 'Technology', value: 'technology' },
     ];
 
+    newsPerPageOptions = [
+        { label: '10', value: 10 },
+        { label: '20', value: 20 },
+        { label: '30', value: 30 },
+        { label: '40', value: 40 },
+        { label: '50', value: 50 },
+        { label: '60', value: 60 },
+        { label: '70', value: 70 },
+        { label: '80', value: 80 },
+        { label: '90', value: 90 },
+        { label: '100', value: 100 },
+    ]
+
+    get pageNumberOptions() {
+        let pageNumbers = [];
+        let pages = Math.ceil(this.totalResults / this.newsPerPage);
+        for(let i = 0; i < pages; i++) {
+            pageNumbers.push(
+                { label: `${i+1}`, value: i+1 }
+            );
+        }
+        return pageNumbers;
+    }
+
     connectedCallback() {
+        this.pageNumber = 1;
         this.fetchNews();
     }
 
     fetchNews() {
         this.isSpinnerLoaded = true;
-        getTopHeadlineNews({ country: this.countryValue, category: this.genreValue, keyword: this.searchTerm })
+        getTopHeadlineNews({ country: this.countryValue, category: this.genreValue, keyword: this.searchTerm, pageSize: this.newsPerPage, page: this.pageNumber })
             .then(response => {
+                console.log(response);
+                this.totalResults = response.totalResults;
                 if(response.articles.length === 0) {
                     this.isThereNews = false;
                 } else {
@@ -77,5 +107,15 @@ export default class NewsComponent extends LightningElement {
         this.timeout = setTimeout(() => {
             this.fetchNews();
         }, 1000);
+    }
+
+    handleNewsPerPageChange(event) {
+        this.newsPerPage = event.detail.value;
+        this.fetchNews();
+    }
+
+    handlePageChange(event) {
+        this.pageNumber = event.detail.value;
+        this.fetchNews();
     }
 }

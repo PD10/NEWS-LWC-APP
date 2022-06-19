@@ -13,11 +13,11 @@ public with sharing class NewsController {
     }
 
     @AuraEnabled(cacheable = true)
-    public static Map<String, Object> getTopHeadlineNews(String country, String category, String keyword) {
+    public static Map<String, Object> getTopHeadlineNews(String country, String category, String keyword, Integer pageSize, Integer page) {
         String jsonResponse = '';
         Map<String, Object> lwcData = new Map<String, Object>();
 
-        String url = String.format('https://newsapi.org/v2/top-headlines?country={0}&category={1}&q={2}', new String[]{ country, category, keyword.toLowerCase() });
+        String url = String.format('https://newsapi.org/v2/top-headlines?country={0}&category={1}&q={2}&pageSize={3}&page={4}', new String[]{ country, category, keyword.toLowerCase(), String.valueOf(pageSize), String.valueOf(page) });
 
         request.setEndpoint(url);
         request.setMethod('GET');
