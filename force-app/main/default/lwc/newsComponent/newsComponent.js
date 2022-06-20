@@ -13,6 +13,7 @@ export default class NewsComponent extends LightningElement {
     newsPerPage = 10;
     pageNumber = 1;
     totalResults;
+    pages;
 
     countryOptions = [
         { label: 'India', value: 'in' },
@@ -45,8 +46,7 @@ export default class NewsComponent extends LightningElement {
 
     get pageNumberOptions() {
         let pageNumbers = [];
-        let pages = Math.ceil(this.totalResults / this.newsPerPage);
-        for(let i = 0; i < pages; i++) {
+        for(let i = 0; i < this.pages; i++) {
             pageNumbers.push(
                 { label: `${i+1}`, value: i+1 }
             );
@@ -63,8 +63,8 @@ export default class NewsComponent extends LightningElement {
         this.isSpinnerLoaded = true;
         getTopHeadlineNews({ country: this.countryValue, category: this.genreValue, keyword: this.searchTerm, pageSize: this.newsPerPage, page: this.pageNumber })
             .then(response => {
-                console.log(response);
                 this.totalResults = response.totalResults;
+                this.pages = Math.ceil(response.totalResults / this.newsPerPage);
                 if(response.articles.length === 0) {
                     this.isThereNews = false;
                 } else {
@@ -110,12 +110,12 @@ export default class NewsComponent extends LightningElement {
     }
 
     handleNewsPerPageChange(event) {
-        this.newsPerPage = event.detail.value;
+        this.newsPerPage = +event.detail.value;
         this.fetchNews();
     }
 
     handlePageChange(event) {
-        this.pageNumber = event.detail.value;
+        this.pageNumber = +event.detail.value;
         this.fetchNews();
     }
 }
